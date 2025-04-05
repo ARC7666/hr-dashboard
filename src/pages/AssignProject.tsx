@@ -105,9 +105,9 @@ const AssignProject = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {teams.map(team => (
+                            {teams.map((team, index) => (
                               <SelectItem key={team.id} value={team.id}>
-                                {team.name}
+                                {team.name || `Team ${index + 1}`}
                               </SelectItem>
                             ))}
                           </SelectContent>

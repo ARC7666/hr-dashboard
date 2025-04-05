@@ -1,264 +1,176 @@
 
-import React, { useState } from 'react';
-import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import Header from '@/components/Header';
-import { employees, tasks } from '@/lib/data';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { employees, projects } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { ArrowLeft, Check, X, FileText, ChartBar } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { BarChart2, Mail, Phone, User } from 'lucide-react';
+
+// Create a tasks array since it's missing in data.ts
+const tasks = [
+  { id: '1', title: 'Review Frontend Updates', status: 'In Progress', deadline: '2023-05-15' },
+  { id: '2', title: 'Complete API Integration', status: 'Completed', deadline: '2023-05-10' },
+  { id: '3', title: 'Fix UI Responsiveness', status: 'Pending', deadline: '2023-05-20' },
+  { id: '4', title: 'Update Documentation', status: 'In Progress', deadline: '2023-05-18' },
+  { id: '5', title: 'Testing Security Features', status: 'Pending', deadline: '2023-05-25' },
+];
 
 const EmployeeDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const [searchParams] = useSearchParams();
-  const defaultTab = searchParams.get('tab') || 'tasks';
-  const [activeTab, setActiveTab] = useState(defaultTab);
-  const [feedback, setFeedback] = useState('');
-  const navigate = useNavigate();
-  const { toast } = useToast();
+  const { id } = useParams();
+  const employee = employees.find(emp => emp.id === id) || employees[0];
   
-  const employee = employees.find(emp => emp.id === id);
+  const employeeTasks = tasks.slice(0, 3); // Just using the first 3 tasks for this employee
   
-  if (!employee) {
-    return (
-      <Layout>
-        <div className="p-6 text-center">
-          <h2 className="text-xl font-semibold">Employee not found</h2>
-          <Button className="mt-4" onClick={() => navigate('/employee-list')}>
-            Back to Employee List
-          </Button>
-        </div>
-      </Layout>
-    );
-  }
-  
-  const handleVerify = (taskId: string) => {
-    toast({
-      title: "Task verified",
-      description: "The task has been verified successfully.",
-    });
-  };
-  
-  const handleReassign = (taskId: string) => {
-    toast({
-      title: "Task reassigned",
-      description: "The task has been reassigned to the employee.",
-    });
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('');
   };
   
   return (
     <Layout>
-      <Header title={employee.name} subtitle={employee.position} />
+      <Header 
+        title={employee.name} 
+        subtitle={employee.position} 
+      />
       
       <div className="p-6">
-        <div className="mb-6">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2"
-            onClick={() => navigate(-1)}
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
-        </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <Card className="lg:col-span-1 animate-fadeIn">
-            <CardHeader>
-              <CardTitle>Employee Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <h3 className="text-sm font-medium">Department</h3>
-                <p className="text-sm text-gray-500">{employee.department}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium">Email</h3>
-                <p className="text-sm text-gray-500">{employee.email}</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium">Tasks</h3>
-                <p className="text-sm text-gray-500">{employee.tasks.length} assigned</p>
-              </div>
-              <div>
-                <h3 className="text-sm font-medium">Overall Performance</h3>
-                <div className="flex items-center mt-1">
-                  <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-blue-600 rounded-full"
-                      style={{ width: `${employee.performance.overall}%` }}
-                    ></div>
+        <div className="max-w-5xl mx-auto">
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="animate-fadeIn">
+              <CardHeader>
+                <CardTitle>Employee Information</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center space-x-4">
+                  <Avatar className="h-20 w-20">
+                    <AvatarImage src={`/avatars/${employee.id}.png`} />
+                    <AvatarFallback className="text-lg">{getInitials(employee.name)}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <h3 className="text-xl font-semibold">{employee.name}</h3>
+                    <p className="text-muted-foreground">{employee.position}</p>
+                    <Badge className="mt-1" variant="outline">{employee.department}</Badge>
                   </div>
-                  <span className="ml-2 text-sm font-medium">{employee.performance.overall}%</span>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                
+                <div className="pt-4 border-t space-y-3">
+                  <div className="flex items-center">
+                    <Mail className="mr-2 h-4 w-4 opacity-70" />
+                    <span className="text-sm">{employee.email || 'employee@company.com'}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <Phone className="mr-2 h-4 w-4 opacity-70" />
+                    <span className="text-sm">{employee.phone || '(555) 123-4567'}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <User className="mr-2 h-4 w-4 opacity-70" />
+                    <span className="text-sm">Employee ID: {employee.id}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="animate-fadeIn delay-100">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>Performance Summary</CardTitle>
+                <Button variant="outline" size="sm">
+                  <BarChart2 className="mr-2 h-4 w-4" />
+                  View Full Report
+                </Button>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium">Productivity</span>
+                      <span className="text-sm font-medium">85%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '85%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium">Team Collaboration</span>
+                      <span className="text-sm font-medium">92%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-green-600 h-2 rounded-full" style={{ width: '92%' }}></div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium">Task Completion</span>
+                      <span className="text-sm font-medium">78%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-yellow-600 h-2 rounded-full" style={{ width: '78%' }}></div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
           
-          <div className="lg:col-span-3 animate-fadeIn delay-100">
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="w-full">
-                <TabsTrigger value="tasks" className="flex-1 flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  Tasks Review
-                </TabsTrigger>
-                <TabsTrigger value="performance" className="flex-1 flex items-center gap-2">
-                  <ChartBar className="h-4 w-4" />
-                  Performance Analysis
-                </TabsTrigger>
-              </TabsList>
-              
-              <TabsContent value="tasks" className="mt-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Tasks</CardTitle>
-                    <CardDescription>
-                      Review employee tasks and provide feedback
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    {employee.tasks.length > 0 ? (
-                      <div className="space-y-6">
-                        {employee.tasks.map(task => (
-                          <Card key={task.id} className="animate-slideIn">
-                            <CardHeader className="pb-2">
-                              <div className="flex justify-between">
-                                <CardTitle className="text-lg">{task.name}</CardTitle>
-                                <div className="flex items-center space-x-2">
-                                  <span className={`inline-block px-2 py-1 rounded-full text-xs priority-${task.priority}`}>
-                                    {task.priority}
-                                  </span>
-                                  <span className={`inline-block px-2 py-1 rounded-full text-xs tag-${task.tag}`}>
-                                    {task.tag}
-                                  </span>
-                                </div>
-                              </div>
-                              <CardDescription>Due: {task.deadline}</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                              <p className="text-sm text-gray-700">{task.description}</p>
-                              
-                              <div className="mt-6">
-                                <h4 className="text-sm font-medium mb-2">Your Feedback</h4>
-                                <Textarea
-                                  placeholder="Provide feedback on this task..."
-                                  className="resize-none min-h-[100px]"
-                                  value={feedback}
-                                  onChange={(e) => setFeedback(e.target.value)}
-                                />
-                              </div>
-                            </CardContent>
-                            <CardFooter className="flex justify-end space-x-2">
-                              <Button 
-                                variant="outline" 
-                                className="flex items-center gap-2"
-                                onClick={() => handleReassign(task.id)}
-                              >
-                                <X className="h-4 w-4" />
-                                Reassign
-                              </Button>
-                              <Button 
-                                className="flex items-center gap-2"
-                                onClick={() => handleVerify(task.id)}
-                              >
-                                <Check className="h-4 w-4" />
-                                Verify
-                              </Button>
-                            </CardFooter>
-                          </Card>
-                        ))}
+          <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <Card className="animate-fadeIn delay-200">
+              <CardHeader>
+                <CardTitle>Current Tasks</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {employeeTasks.map(task => (
+                    <div key={task.id} className="p-3 border rounded-lg">
+                      <div className="flex justify-between mb-1">
+                        <h4 className="font-medium">{task.title}</h4>
+                        <Badge variant={
+                          task.status === 'Completed' ? 'default' : 
+                          task.status === 'In Progress' ? 'secondary' : 
+                          'outline'
+                        }>
+                          {task.status}
+                        </Badge>
                       </div>
-                    ) : (
-                      <div className="text-center py-8">
-                        <p className="text-gray-500">No tasks assigned to this employee.</p>
-                      </div>
-                    )}
-                  </CardContent>
-                </Card>
-              </TabsContent>
-              
-              <TabsContent value="performance" className="mt-4">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Performance Analysis</CardTitle>
-                    <CardDescription>
-                      Detailed breakdown of employee performance metrics
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6 animate-fadeIn">
-                      <div>
-                        <div className="flex justify-between mb-1">
-                          <h4 className="text-sm font-medium">Productivity</h4>
-                          <span className="text-sm">{employee.performance.productivity}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 rounded-full">
-                          <div 
-                            className="h-full bg-blue-600 rounded-full"
-                            style={{ width: `${employee.performance.productivity}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      <div className="animate-fadeIn delay-100">
-                        <div className="flex justify-between mb-1">
-                          <h4 className="text-sm font-medium">Quality</h4>
-                          <span className="text-sm">{employee.performance.quality}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 rounded-full">
-                          <div 
-                            className="h-full bg-purple-600 rounded-full"
-                            style={{ width: `${employee.performance.quality}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      <div className="animate-fadeIn delay-200">
-                        <div className="flex justify-between mb-1">
-                          <h4 className="text-sm font-medium">Teamwork</h4>
-                          <span className="text-sm">{employee.performance.teamwork}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 rounded-full">
-                          <div 
-                            className="h-full bg-green-600 rounded-full"
-                            style={{ width: `${employee.performance.teamwork}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      <div className="animate-fadeIn delay-300">
-                        <div className="flex justify-between mb-1">
-                          <h4 className="text-sm font-medium">Innovation</h4>
-                          <span className="text-sm">{employee.performance.innovation}%</span>
-                        </div>
-                        <div className="w-full h-2 bg-gray-200 rounded-full">
-                          <div 
-                            className="h-full bg-amber-600 rounded-full"
-                            style={{ width: `${employee.performance.innovation}%` }}
-                          ></div>
-                        </div>
-                      </div>
-                      
-                      <div className="pt-4 border-t animate-fadeIn">
-                        <div className="flex justify-between mb-1">
-                          <h4 className="font-medium">Overall Performance</h4>
-                          <span className="font-medium">{employee.performance.overall}%</span>
-                        </div>
-                        <div className="w-full h-3 bg-gray-200 rounded-full">
-                          <div 
-                            className="h-full bg-blue-600 rounded-full"
-                            style={{ width: `${employee.performance.overall}%` }}
-                          ></div>
-                        </div>
+                      <p className="text-sm text-gray-500">Deadline: {task.deadline}</p>
+                      <div className="mt-2 flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">Review</Button>
+                        <Button size="sm">Reassign</Button>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="animate-fadeIn delay-300">
+              <CardHeader>
+                <CardTitle>Project Participation</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {projects.slice(0, 3).map(project => (
+                    <div key={project.id} className="p-3 border rounded-lg">
+                      <h4 className="font-medium">{project.name}</h4>
+                      <p className="text-sm text-gray-500 mb-2">Role: {
+                        ['Developer', 'Designer', 'QA Analyst'][Math.floor(Math.random() * 3)]
+                      }</p>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs text-gray-500">
+                          Contribution: {Math.floor(Math.random() * 30) + 70}%
+                        </span>
+                        <Button variant="ghost" size="sm">View Details</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

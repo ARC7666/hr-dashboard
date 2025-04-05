@@ -131,7 +131,7 @@ const CreateTeam = () => {
                           <SelectContent>
                             {managers.map(manager => (
                               <SelectItem key={manager.id} value={manager.id}>
-                                {manager.name} - {manager.position}
+                                {manager.name.replace(/[A-Za-z]+ ([A-Za-z]+)/, 'Employee $1')}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -167,7 +167,7 @@ const CreateTeam = () => {
                           </PopoverTrigger>
                           <PopoverContent className="w-[400px] p-0" align="start">
                             <div className="p-4 space-y-4">
-                              {employees.map(employee => {
+                              {employees.map((employee, index) => {
                                 const isSelected = field.value.includes(employee.id);
                                 return (
                                   <div 
@@ -184,7 +184,7 @@ const CreateTeam = () => {
                                       {isSelected && <Check className="h-3.5 w-3.5 text-white" />}
                                     </div>
                                     <div>
-                                      <p className="font-medium">{employee.name}</p>
+                                      <p className="font-medium">Employee {index + 1}</p>
                                       <p className="text-sm text-gray-500">{employee.position}</p>
                                     </div>
                                   </div>
