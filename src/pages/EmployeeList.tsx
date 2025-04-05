@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
-import Header from '@/components/Header';
+import LayoutC from '@/components/LayoutC';
+import HeaderC from '@/components/HeaderC';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,8 +20,8 @@ const EmployeeList = () => {
   );
   
   return (
-    <Layout>
-      <Header 
+    <LayoutC>
+      <HeaderC 
         title="Employee List" 
         subtitle="View and manage employees in your organization" 
       />
@@ -106,7 +106,7 @@ const EmployeeList = () => {
           </div>
         )}
       </div>
-    </Layout>
+    </LayoutC>
   );
 };
 

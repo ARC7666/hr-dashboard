@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
-import Layout from '@/components/Layout';
-import Header from '@/components/Header';
+import LayoutC from '@/components/LayoutC';
+import HeaderC from '@/components/HeaderC';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { employees } from '@/lib/data';
@@ -19,15 +20,15 @@ const EmployeeDetail = () => {
 
   if (!employee) {
     return (
-      <Layout>
+      <LayoutC>
         <div>Employee not found</div>
-      </Layout>
+      </LayoutC>
     );
   }
 
   return (
-    <Layout>
-      <Header
+    <LayoutC>
+      <HeaderC
         title={employee.name}
         subtitle={`Details for ${employee.position}`}
       />
@@ -60,7 +61,6 @@ const EmployeeDetail = () => {
               <p className="text-sm font-medium">Email</p>
               <p className="text-sm text-gray-500">{employee.email}</p>
             </div>
-            {/* Removed phone property as it does not exist in the Employee type */}
             <div>
               <p className="text-sm font-medium">Tasks</p>
               <p className="text-sm text-gray-500">{employee.tasks.length} assigned</p>
@@ -98,7 +98,7 @@ const EmployeeDetail = () => {
           </Card>
         )}
       </div>
-    </Layout>
+    </LayoutC>
   );
 };
 

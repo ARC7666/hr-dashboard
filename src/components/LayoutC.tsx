@@ -1,16 +1,16 @@
 
 import React, { ReactNode } from 'react';
-import Sidebar from './Sidebar';
+import SidebarC from './SidebarC';
 import { useToast } from "@/hooks/use-toast";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function LayoutC({ children }: LayoutProps) {
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
+      <SidebarC />
       <div className="flex-1 overflow-auto">
         {children}
       </div>

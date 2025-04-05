@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Users, Plus, FileText, BarChart2, Settings, Menu, PlusSquare } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-export default function Sidebar() {
+export default function SidebarC() {
   const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
   
