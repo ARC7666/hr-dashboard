@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { employees } from '@/lib/data';
-import { Search, ChartBar } from 'lucide-react';
+import { Search, ChartBar, PlusCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const EmployeeList = () => {
@@ -79,12 +79,19 @@ const EmployeeList = () => {
                     <p className="text-sm font-medium">Tasks</p>
                     <p className="text-sm text-gray-500">{employee.tasks.length} assigned</p>
                   </div>
-                  <div className="pt-2">
+                  <div className="pt-2 flex gap-2">
                     <Button 
                       className="w-full" 
                       onClick={() => navigate(`/employee/${employee.id}`)}
                     >
                       View Details
+                    </Button>
+                    <Button 
+                      className="w-full flex items-center gap-1" 
+                      variant="outline"
+                    >
+                      <PlusCircle className="h-4 w-4" />
+                      Assign Task
                     </Button>
                   </div>
                 </div>
