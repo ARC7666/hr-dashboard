@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import CreateTeam from "./pages/CreateTeam";
+import AssignProject from "./pages/AssignProject";
 import EmployeeList from "./pages/EmployeeList";
 import EmployeeDetail from "./pages/EmployeeDetail";
 import TeamPerformance from "./pages/TeamPerformance";
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/create-team" element={<CreateTeam />} />
+          <Route path="/assign-project" element={<AssignProject />} />
           <Route path="/employee-list" element={<EmployeeList />} />
           <Route path="/employee/:id" element={<EmployeeDetail />} />
           <Route path="/team-performance" element={<TeamPerformance />} />

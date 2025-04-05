@@ -67,31 +67,31 @@ export interface TeamPerformance {
 export const managers: Manager[] = [
   {
     id: 'm1',
-    name: 'Alice Johnson',
+    name: 'Manager 1',
     position: 'Senior Engineering Manager',
     department: 'Engineering',
-    email: 'alice.johnson@floww.com'
+    email: 'manager1@floww.com'
   },
   {
     id: 'm2',
-    name: 'Bob Williams',
+    name: 'Manager 2',
     position: 'Design Director',
     department: 'Design',
-    email: 'bob.williams@floww.com'
+    email: 'manager2@floww.com'
   },
   {
     id: 'm3',
-    name: 'Carol Smith',
+    name: 'Manager 3',
     position: 'Product Manager',
     department: 'Product',
-    email: 'carol.smith@floww.com'
+    email: 'manager3@floww.com'
   },
   {
     id: 'm4',
-    name: 'David Brown',
+    name: 'Manager 4',
     position: 'Marketing Lead',
     department: 'Marketing',
-    email: 'david.brown@floww.com'
+    email: 'manager4@floww.com'
   }
 ];
 
@@ -99,10 +99,10 @@ export const managers: Manager[] = [
 export const employees: Employee[] = [
   {
     id: 'e1',
-    name: 'John Doe',
+    name: 'Employee 1',
     position: 'Senior Developer',
     department: 'Engineering',
-    email: 'john.doe@floww.com',
+    email: 'employee1@floww.com',
     tasks: [
       {
         id: 't1',
@@ -125,10 +125,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e2',
-    name: 'Jane Smith',
+    name: 'Employee 2',
     position: 'UX Designer',
     department: 'Design',
-    email: 'jane.smith@floww.com',
+    email: 'employee2@floww.com',
     tasks: [
       {
         id: 't2',
@@ -151,10 +151,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e3',
-    name: 'Mark Johnson',
+    name: 'Employee 3',
     position: 'Backend Developer',
     department: 'Engineering',
-    email: 'mark.johnson@floww.com',
+    email: 'employee3@floww.com',
     tasks: [
       {
         id: 't3',
@@ -177,10 +177,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e4',
-    name: 'Sara Williams',
+    name: 'Employee 4',
     position: 'Project Manager',
     department: 'Product',
-    email: 'sara.williams@floww.com',
+    email: 'employee4@floww.com',
     tasks: [
       {
         id: 't4',
@@ -203,10 +203,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e5',
-    name: 'James Wilson',
+    name: 'Employee 5',
     position: 'Frontend Developer',
     department: 'Engineering',
-    email: 'james.wilson@floww.com',
+    email: 'employee5@floww.com',
     tasks: [],
     performance: {
       productivity: 78,
@@ -218,10 +218,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e6',
-    name: 'Emily Davis',
+    name: 'Employee 6',
     position: 'Content Strategist',
     department: 'Marketing',
-    email: 'emily.davis@floww.com',
+    email: 'employee6@floww.com',
     tasks: [],
     performance: {
       productivity: 86,
@@ -233,10 +233,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e7',
-    name: 'Michael Brown',
+    name: 'Employee 7',
     position: 'QA Engineer',
     department: 'Engineering',
-    email: 'michael.brown@floww.com',
+    email: 'employee7@floww.com',
     tasks: [],
     performance: {
       productivity: 82,
@@ -248,10 +248,10 @@ export const employees: Employee[] = [
   },
   {
     id: 'e8',
-    name: 'Sophia Miller',
+    name: 'Employee 8',
     position: 'Product Designer',
     department: 'Design',
-    email: 'sophia.miller@floww.com',
+    email: 'employee8@floww.com',
     tasks: [],
     performance: {
       productivity: 88,
